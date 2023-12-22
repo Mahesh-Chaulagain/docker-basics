@@ -1,0 +1,11 @@
+
+services:
+  transformers-notebook:
+    # image: jupyter/tensorflow-notebook  # specify existing image
+    build: ./   # specify the location of the docker file
+    ports:
+      - 8000:8888
+    environment:
+      - JUPYTER_TOKEN=hello	# set password for the url instead of token
+    volumes:
+      - ./:/home/jovyan

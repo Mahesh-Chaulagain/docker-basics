@@ -1,0 +1,93 @@
+# Steps:
+1. Search Images
+    -> syntax: docker search "imagename"
+    -> example: docker search tensorflow
+    -> select the required image
+
+2.  Pull Images
+    -> syntax: docker pull repositoryname(with username/image)
+    -> example: docker pull jupyter/tensorflow-notebook
+    -> images are pulled from hub.docker.com
+
+3. Run Container
+    -> turns the image into the container
+    -> syntax: docker run repositoryname
+    -> docker run  jupyter/tensorflow-notebook
+    -> the url link wont work because it has properties of the container which is isolated process on our computer
+
+4. Expose Port
+    -> choose a port from our host system
+    -> syntax: docker run -p our_port:port_from_container jupyter/tensorflow-notebook
+    -> example: docker run -p 8000:8888 jupyter/tensorflow-notebook
+    -> Then open browser and goto localhost:8000
+    -> add token generated from the cmd line in the required field
+    -> we created a corridor where Docker takes all the actions that we perform in the browser window and it automatically
+       applies them on our container
+
+5. Docker Compose
+    -> an alternative way of defining containers
+    -> if we want to reproduce the same container that we ran earlier we will need a compose file that defines it
+    -> YAML language: contains indented pairs of keys and values separated by colons.The indentation in YAML is crucial.
+    -> create a new file compose.yml as:
+        services:
+            transformers-notebook:
+                image:jupyter/tensorflow-notebook
+                ports:
+                    -8000:8888
+    -> open powershell in the currect project directory and type following
+            >docker-compose --version
+            >docker compose up
+
+6. Set Jupyter Token
+    -> stop and remove container with: docker compose down
+    -> add another key of environment and assign it to value of JUPYTER_TOKEN like
+        > environment:
+            - JUPYTER_TOKEN=password
+
+7. Drive Mounting
+    -> a way of preserving our file
+    -> where we expose a folder from our container to a folder on our host machine
+    -> create a new key of volumes as:
+        > volumes:
+            - ./
+    -> then on cmd line type: docker compose up
+    -> the file will be uploaded in the container file tree
+
+8. Docker file:
+    -> the way to build image
+    -> created with name just "Dockerfile"
+    -> FROM - specifies the parent image on which our container is based
+            - specifies the base image to use for the Docker image
+    -> USER - contains a variable of a user with the right permission
+        set to  root if user is unknown
+    -> RUN - runs a command inside the Docker container during the build process
+    -> COPY - copies files from the local file system to the Docker image
+    -> WORKDIR - sets the working directory for subsequent commands in the Dockerfile
+    -> CMD - specifies the command to run when the Docker container starts
+
+9. Copy file to image
+    -> COPY insruction takes files from our project folder and stores them directly on our image
+
+10. Prune containers
+    -> will remove all stopped containers
+    -> syntax: docker container prune
+
+11. Push to Dockerhub
+    -> go to hub.docker.com->create repositoryname
+    -> In cmd:
+        >docker images : shows all the images that we've pulled and currently stored in our system
+        >docker image tag name_of_local_repostory:tag name_of_remote_repository:tag
+            example:docker image tag docker-transformers-notebook:latest mahesh2/srt-translator:1.0
+        >docker push new_repository_name:tag
+            example:docker push mahesh2/srt-translator:1.0
+
+12. Remove images
+    -> remove the local instance of image
+    -> syntax: docker rmi name_of_image:tag 
+
+*pull our image from the remote repoistory in dockerhub using:
+    >docker pull mahesh2/srt-translator:1.0
+
+*run the pulled image using:
+    >docker run -p host_system_port:container_port name_of_image:tag
+    >example:docker run -p 5000:8888 mahesh2/srt-translator:1.0

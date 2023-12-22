@@ -1,0 +1,28 @@
+# Docker:
+-> platform that helps us to build, run and share software
+-> uses containers to create isolated environments where programs live
+-> Containers: entities that operate in the sandbox 
+    No entry no exit: which means that all the modules and libraries that our sofware needs are already pre-installed the container
+
+# Importance of Docker:
+-> creates controlled, consistant environment that is same for all kinds of os
+
+# Docker Images:
+-> similar to github repositories but instead of just storing the code , they also store the idea set of conditions 
+   for our code
+-> we get the environment where our software is already installed
+-> have read only format which means they cannot be modified
+-> can build new images but cannot change existing ones
+-> Images are static set of instructions used to create containers
+-> If images are blueprint of a house then the container is the house itself
+-> Images: read build
+
+# Docker Container:
+-> a running instance of an images
+-> can modidy containers
+-> containers: run modify
+
+# Docker file:
+-> the way to build image
+-> created with name just "Dockerfile"
+
